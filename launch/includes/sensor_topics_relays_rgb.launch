@@ -1,0 +1,11 @@
+<launch>
+
+  <arg name="camera" default="camera" />
+  <arg name="rgb" default="rgb" />
+
+  <node name="rgb_uncompress" pkg="image_transport" type="republish" output="screen" args="compressed in:=/$(arg camera)_sensor/$(arg rgb)/image_raw raw out:=/$(arg camera)/$(arg rgb)/image_raw" />
+  <node name="rgb_info_relay" pkg="topic_tools" type="relay" output="screen" args="/$(arg camera)_sensor/$(arg rgb)/camera_info /$(arg camera)/$(arg rgb)/camera_info" >
+    <param name="lazy" type="bool" value="true" />
+  </node>
+
+</launch>

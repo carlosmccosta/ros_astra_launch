@@ -1,0 +1,16 @@
+<launch>
+
+  <arg name="camera" default="camera" />
+  <arg name="depth" default="depth" />
+
+  <node name="depth_uncompress" pkg="image_transport" type="republish" output="screen" args="compressedDepth in:=/$(arg camera)_sensor/$(arg depth)/image_raw raw out:=/$(arg camera)/$(arg depth)/image_raw" />
+  <node name="depth_info_relay" pkg="topic_tools" type="relay" output="screen" args="/$(arg camera)_sensor/$(arg depth)/camera_info /$(arg camera)/$(arg depth)/camera_info" >
+    <param name="lazy" type="bool" value="true" />
+  </node>
+
+  <node name="depth_registered_uncompress" pkg="image_transport" type="republish" output="screen" args="compressedDepth in:=/$(arg camera)_sensor/$(arg depth)_registered/image_raw raw out:=/$(arg camera)/$(arg depth)_registered/image_raw" />
+  <node name="depth_registered_info_relay" pkg="topic_tools" type="relay" output="screen" args="/$(arg camera)_sensor/$(arg depth)_registered/camera_info /$(arg camera)/$(arg depth)_registered/camera_info" >
+    <param name="lazy" type="bool" value="true" />
+  </node>
+
+</launch>
